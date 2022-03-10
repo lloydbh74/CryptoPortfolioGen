@@ -18,8 +18,8 @@
           <div class="col-sm-4">
             <h2>Investment Amount</h2>
             <div class="form-floating">
-              <input type="text" class="form-control" id="floatingFiatAmount" aria-describedby="FiatAmountHelp" value="100">
-              <label for="FiatAmount" class="form-label" placeholder="How much are you investing?">Fiat Amount</label>
+              <input type="number" class="form-control" id="fiatAmount" aria-describedby="FiatAmountHelp" value="100">
+              <label for="fiatAmount" class="form-label" placeholder="How much are you investing?">Fiat Amount</label>
             </div>
           </div>
           <div class="col-sm-8">
@@ -27,41 +27,83 @@
             <div class="row">
               <div class="col-sm-3">
                 <div class="form-floating">
-                  <input type="text" class="form-control" id="floatingRALow" aria-describedby="floatingRALowHelp" value="50%">
-                  <label for="floatingRALow" class="form-label" placeholder="Low">Low</label>
+                  <input type="number" class="form-control" id="raLow" aria-describedby="raLowHelp" value="50">
+                  <label for="raLow" class="form-label" placeholder="Low">Low %</label>
                 </div>
-                <p id="RALowAmount">l</p>
+                <p id="raLowAmount"></p>
               </div>
               <div class="col-sm-3">
                 <div class="form-floating">
-                  <input type="text" class="form-control" id="floatingRAMedium" aria-describedby="floatingRAMediumHelp" value="20%">
-                  <label for="floatingRAMedium" class="form-label" placeholder="Medium">Medium</label>
+                  <input type="number" class="form-control" id="raMedium" aria-describedby="raMediumHelp" value="20">
+                  <label for="raMedium" class="form-label" placeholder="Medium">Medium %</label>
                 </div>
-                <p id="RAMediumAmount">m</p>
+                <p id="raMediumAmount"></p>
               </div>
               <div class="col-sm-3">
                 <div class="form-floating">
-                  <input type="text" class="form-control" id="floatingRAHigh" aria-describedby="floatingRAHighHelp" value="15%">
-                  <label for="floatingRAHigh" class="form-label" placeholder="High">High</label>
+                  <input type="number" class="form-control" id="raHigh" aria-describedby="raHighHelp" value="15">
+                  <label for="raHigh" class="form-label" placeholder="High">High %</label>
                 </div>
-                <p id="RAHighAmount">h</p>
+                <p id="raHighAmount"></p>
               </div>
               <div class="col-sm-3">
                 <div class="form-floating">
-                  <input type="text" class="form-control" id="floatingRADegen" aria-describedby="floatingRADegenHelp" value="15%">
-                  <label for="floatingRADegen" class="form-label" placeholder="Degen">Degen</label>
+                  <input type="number" class="form-control" id="raDegen" aria-describedby="raDegenHelp" value="15">
+                  <label for="raDegen" class="form-label" placeholder="Degen">Degen %</label>
                 </div>
-                <p id="RADegenAmount">d</p>
+                <p id="raDegenAmount"></p>
               </div>
             </div>
           </div>
         </div>
+        <button onclick="calcRiskPortfolio()">Calculate </button>
       </form>
     </div>
 
-    <!-- Optional JavaScript; choose one of the two! -->
+    <!-- Risk Appetite calculator START-->
+      <script>
+        //<!-- calculate a percentage-->
+        function percentage(num, per)
+          {
+            return (num/100)*per;
+          }
 
-    <!-- Option 1: Bootstrap Bundle with Popper -->
+        function calcRiskPortfolio() {
+        //<!-- get the fiat amount -->
+        var fiatAmount = document.getElementById("fiatAmount").value;
+        //<!-- get the risk percentage Low -->
+        var raLow = document.getElementById("raLow").value;
+        //<!-- get the risk percentage Medium -->
+        var raMedium = document.getElementById("raMedium").value;
+        //<!-- get the risk percentage High -->
+        var raHigh = document.getElementById("raHigh").value;
+        //<!-- get the risk percentage Degen -->
+        var raDegen = document.getElementById("raDegen").value;
+
+
+        //<!-- calculate fiat x Low -->
+        var raLowAmount = Math.round(((fiatAmount / 100) * raLow)) +"%";
+        //<!-- calculate fiat x Medium -->
+        var raMediumAmount = Math.round(((fiatAmount / 100) * raMedium)) +"%";
+        //<!-- calculate fiat x High -->
+        var raHighAmount = Math.round(((fiatAmount / 100) * raHigh)) +"%";
+        //<!-- calculate fiat x Degen -->
+        var raDegenAmount = Math.round(((fiatAmount / 100) * raDegen)) +"%";
+
+        // <!-- Print fiat amount to invest for Low -->
+        document.getElementById("raLowAmount").innerHTML = raLowAmount;
+        //<!-- Print fiat amount to invest for Medium -->
+        document.getElementById("raMediumAmount").innerHTML = raMediumAmount;
+        //<!-- Print fiat amount to invest for High -->
+        document.getElementById("raHighAmount").innerHTML = raHighAmount;
+        //<!-- Print fiat amount to invest for Degen -->
+        document.getElementById("raDegenAmount").innerHTML = raDegenAmount;
+        //<!-- confirm all investment amounts add up to initial fiat amount -->
+      }
+      </script>
+    <!-- Risk Appetite calculator END-->
+
+    <!-- Bootstrap Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 
     <!-- Option 2: Separate Popper and Bootstrap JS -->
